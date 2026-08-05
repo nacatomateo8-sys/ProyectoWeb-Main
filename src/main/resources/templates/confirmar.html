@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar Compra | Puntada Creativa</title>
+    <link rel="stylesheet" th:href="@{/css/disenoweb.css}">
+    <style>
+        .contenedor-pago { max-width: 500px; margin: 40px auto; padding: 30px; border: 1px solid #ece6bf; border-radius: 8px; background: #fdfbf7; }
+        .btn-custom { width: 100%; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; text-align: center; display: block; text-decoration: none; }
+        .btn-pagar { background: #1C3D27; color: white; }
+        .btn-pagar:hover { background: #142c1c; }
+        .btn-volver { background: #e0dcd9; color: #555; }
+        .btn-volver:hover { background: #d0ccc9; }
+        .btn-historial { background: #8B5E3C; color: white; margin-top: 20px; }
+        .btn-historial:hover { background: #6d4a30; }
+        .resumen-recibo { border-top: 2px dashed #ccc; margin-top: 20px; padding-top: 15px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <main class="contenedor-pago">
+            <h2 style="text-align:center;">Método de Pago</h2>
+            
+            <div class="resumen-recibo" th:if="${carrito != null}">
+                <p><strong>Resumen de tu pedido:</strong></p>
+                <ul>
+                    <li th:each="item : ${carrito.items}" th:text="${item.producto.nombre} + ' - $' + ${item.subtotal}">Producto - Precio</li>
+                </ul>
+                <p><strong>Total a pagar: $<span th:text="${carrito.total}">0.00</span></strong></p>
+            </div>
+
+            <form th:action="@{/carrito/pagar}" method="POST">
+                <div style="margin: 20px 0;">
+                    <label><input type="radio" name="metodo" value="Transferencia" checked> Transferencia Banco Pichincha</label><br><br>
+                    <label><input type="radio" name="metodo" value="Efectivo"> Efectivo en Taller</label>
+                </div>
+                <button type="submit" class="btn-custom btn-pagar">Finalizar Pedido y Pagar</button>
+            </form>
+
+            <a th:href="@{/catalogo}" class="btn-custom btn-volver">⬅ Seguir viendo manualidades</a>
+            
+            <a th:href="@{/usuario/historial}" class="btn-custom btn-historial">📜 Ver Historial de Compras</a>
+            
+        </main>
+    </div>
+</body>
+</html>

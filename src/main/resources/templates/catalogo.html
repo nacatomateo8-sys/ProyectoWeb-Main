@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | Puntada Creativa</title>
+    <link rel="stylesheet" th:href="@{/css/disenoweb.css}">
+</head>
+<body>
+<div class="contenedor">
+
+    <header>
+        <a th:href="@{/}">
+            <img th:src="@{/img/logo.jpg}" alt="Logo Puntada Creativa" class="nav-logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/catalogo}" class="active">Catálogo</a></li>
+                <li><a th:href="@{/nosotros}">Nosotros</a></li>
+                <li><a th:href="@{/ubicacion}">Ubicación</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h2 class="titulo-centrado">Nuestras Creaciones</h2>
+        <p class="subtitulo-centrado">Cada pieza elaborada con fieltro, limpiapipas y mucho corazón</p>
+        <div class="divider"></div>
+
+        <div class="product-grid" id="productGrid">
+
+            <div class="product-card" onclick="openProductModal(1)">
+                <div class="product-img-wrap"><img th:src="@{/img/1.jpg}" alt="Angel grande en tela"></div>
+                <div class="product-card-info">
+                    <span class="badge">Temporada</span>
+                    <h3>Angel grande en tela</h3>
+                    <p class="desc">Angel grande en tela con detalles en limpiapipas. Decoración navideña única.</p>
+                    <span class="price">$15.00</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(2)">
+                <div class="product-img-wrap"><img th:src="@{/img/2.jpg}" alt="Muñequitas de tela"></div>
+                <div class="product-card-info">
+                    <span class="badge">Popular</span>
+                    <h3>Muñequitas de tela</h3>
+                    <p class="desc">Muñequitas de tela, sentadas en una repisa de madera artesanal.</p>
+                    <span class="price">$5.00</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(3)">
+                <div class="product-img-wrap"><img th:src="@{/img/3.jpg}" alt="Muñequita en base"></div>
+                <div class="product-card-info">
+                    <span class="badge">Nuevo</span>
+                    <h3>Muñequita en base</h3>
+                    <p class="desc">Muñequita decorativa sobre base de madera con ganchos artesanales.</p>
+                    <span class="price">$12.50</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(4)">
+                <div class="product-img-wrap"><img th:src="@{/img/4.jpg}" alt="Colgantes Navideños"></div>
+                <div class="product-card-info">
+                    <span class="badge">Navidad</span>
+                    <h3>Colgantes Navideños</h3>
+                    <p class="desc">Adornos para el árbol hechos con palitos de madera y mucha creatividad.</p>
+                    <span class="price">$2.50</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(5)">
+                <div class="product-img-wrap"><img th:src="@{/img/5.jpg}" alt="Caritas colgantes"></div>
+                <div class="product-card-info">
+                    <h3>Caritas colgantes</h3>
+                    <p class="desc">Caritas de Papa Noel hechas in fieltro para colgar en el árbol.</p>
+                    <span class="price">$1.50</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(6)">
+                <div class="product-img-wrap"><img th:src="@{/img/6.jpg}" alt="Flores Limpiapipas"></div>
+                <div class="product-card-info">
+                    <span class="badge">Temporada</span>
+                    <h3>Flores Limpiapipas</h3>
+                    <p class="desc">Flores coloridas hechas totalmente a mano con limpiapipas.</p>
+                    <span class="price">$4.00</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(7)">
+                <div class="product-img-wrap"><img th:src="@{/img/7.jpg}" alt="Angel de la Guarda"></div>
+                <div class="product-card-info">
+                    <h3>Angel de la Guarda</h3>
+                    <p class="desc">Angel de tamaño grande confeccionado en tela suave.</p>
+                    <span class="price">$15.00</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(8)">
+                <div class="product-img-wrap"><img th:src="@{/img/8.jpg}" alt="Girasol en Macetero"></div>
+                <div class="product-card-info">
+                    <h3>Girasol en Macetero</h3>
+                    <p class="desc">Girasol decorativo en macetero con detalles en limpiapipas.</p>
+                    <span class="price">$6.00</span>
+                </div>
+            </div>
+
+     
+
+            <div class="product-card" onclick="openProductModal(10)">
+                <div class="product-img-wrap"><img th:src="@{/img/10.jpg}" alt="Colgante Ovejita Tierna"></div>
+                <div class="product-card-info">
+                    <h3>Macetero con flores </h3>
+                    <p class="desc">Macetero de flores decorativo de limpiapipas.</p>
+                    <span class="price">$2.50</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(11)">
+                <div class="product-img-wrap"><img th:src="@{/img/12.jpg}" alt="Ángel de Encaje con Campana"></div>
+                <div class="product-card-info">
+                    <span class="badge">Popular</span>
+                    <h3>Muñecos navideños en fieltro</h3>
+                    <p class="desc">Hermoso muñecos decorativos de navidad .</p>
+                    <span class="price">$5.00</span>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openProductModal(12)">
+                <div class="product-img-wrap"><img th:src="@{/img/14.jpg}" alt="Aplique Gnomo Brillantina"></div>
+                <div class="product-card-info">
+                    <h3>figuritas en foamix</h3>
+                    <p class="desc">figuritas de foamix llamativas.</p>
+                    <span class="price">$1.50</span>
+                </div>
+            </div>
+
+         
+
+        
+            <div class="product-card" onclick="openProductModal(15)">
+                <div class="product-img-wrap"><img th:src="@{/img/24.jpg}" alt="Porta Dulces Navideño Reno o Santa"></div>
+                <div class="product-card-info">
+                    <span class="badge">Navidad</span>
+                    <h3>Porta Dulces Navideño Papa Noel</h3>
+                    <p class="desc">Original y tierno adorno navideño en foami con espacio central para colocar dulces.</p>
+                    <span class="price">$1.50</span>
+                </div>
+            </div>
+        
+            <div class="product-card" onclick="openProductModal(16)">
+                <div class="product-img-wrap"><img th:src="@{/img/25.jpg}" alt="Aplique Abejita Sonriente"></div>
+                <div class="product-card-info">
+                    <h3>Porta Dulces Navideño Pinguino</h3>
+                    <p class="desc">Original y tierno adorno navideño en foami con espacio central para colocar dulces.</p>
+                    <span class="price">$1.50</span>
+                </div>
+            </div>
+        
+            <div class="product-card" onclick="openProductModal(17)">
+                <div class="product-img-wrap"><img th:src="@{/img/26.jpg}" alt="Aplique Vaquita Coqueta"></div>
+                <div class="product-card-info">
+                    <h3>Porta Dulces De Ovejita</h3>
+                    <p class="desc">Original y tierno adorno navideño en foami con espacio central para colocar dulces.</p>
+                    <span class="price">$1.50</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-home" style="margin-top: 50px;">
+            <h3>¿Te interesa alguna creación?</h3>
+            <p>Escríbenos por WhatsApp para hacer tu pedido o preguntar por personalizaciones de manera directa.</p>
+            <a href="https://wa.me/593989777823" target="_blank" class="btn">Escribir por WhatsApp</a>
+        </div>
+    </main>
+
+    <button class="cart-fab" onclick="openCart()" aria-label="Ver Carrito">
+        🛒 <span class="fab-count" id="fabCount">0</span>
+    </button>
+
+    <div class="toast" id="toast"></div>
+
+    <footer>
+        <div class="footer-inner">
+            <p class="footer-logo-text">Puntada Creativa</p>
+            <p class="footer-info">
+                Dirección: Colibrí y Cashapamba, Sangolquí, Ecuador<br>
+                WhatsApp: <a href="https://wa.me/593989777823" target="_blank">+593 98 977 7823</a>
+            </p>
+            <p class="footer-author">© 2026 Puntada Creativa. Desarrollado con amor desde Quito.</p>
+        </div>
+    </footer>
+
+    <div class="overlay" id="overlayProduct" onclick="closeIfBg(event,'overlayProduct')">
+        <div class="product-modal">
+            <button class="modal-x" onclick="closeOverlay('overlayProduct')">✕</button>
+            <div class="pm-img-wrap" id="pmImgWrap"></div>
+            <div class="pm-body">
+                <span class="badge" id="pmBadge"></span> <div class="pm-title" id="pmTitle"></div>
+                <div class="pm-desc" id="pmDesc"></div>
+                <div class="pm-price" id="pmPrice"></div>
+                <div class="pm-qty-row">
+                    <label>Cantidad</label>
+                    <div class="qty-box">
+                        <button onclick="changeModalQty(-1)">−</button>
+                        <span id="modalQty">1</span>
+                        <button onclick="changeModalQty(1)">+</button>
+                    </div>
+                </div>
+                <div class="pm-actions">
+                    <button class="btn btn-add-cart" id="btnAddCart" onclick="addFromModal()">🛒 Agregar al carrito</button>
+                    <button class="btn-close-modal" onclick="closeOverlay('overlayProduct')">Seguir viendo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-drawer-backdrop" id="cartBackdrop" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>🛒 Tu carrito</h3>
+            <button onclick="closeCart()">✕</button>
+        </div>
+        <div class="cart-items-area" id="cartItemsArea"></div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span class="tl">Total</span>
+                <span class="ta" id="cartTotal">$0.00</span>
+            </div>
+            <a th:href="@{/carrito}" class="btn" style="display: block; text-align: center;">Ver carrito completo</a>
+        </div>
+    </div>
+
+</div>
+
+<script th:src="@{/js/carrito.js}"></script>
+<script>
+// Arreglo PRODUCTS sincronizado exactamente con los datos de tu estructura HTML
+const PRODUCTS = [
+    { id: 1, nombre: "Angel grande en tela", precio: 15.00, desc: "Angel grande en tela con detalles en limpiapipas. Decoración navideña única.", imagen: "img/1.jpg", badge: "Temporada" },
+    { id: 2, nombre: "Muñequitas de tela", precio: 5.00, desc: "Muñequitas de tela, sentadas en una repisa de madera artesanal.", imagen: "img/2.jpg", badge: "Popular" },
+    { id: 3, nombre: "Muñequita en base", precio: 12.50, desc: "Muñequita decorativa sobre base de madera con ganchos artesanales.", imagen: "img/3.jpg", badge: "Nuevo" },
+    { id: 4, nombre: "Colgantes Navideños", precio: 2.50, desc: "Adornos para el árbol hechos con palitos de madera y mucha creatividad.", imagen: "img/4.jpg", badge: "Navidad" },
+    { id: 5, nombre: "Caritas colgantes", precio: 1.50, desc: "Caritas de Papa Noel hechas in fieltro para colgar en el árbol.", imagen: "img/5.jpg", badge: "" },
+    { id: 6, nombre: "Flores Limpiapipas", precio: 4.00, desc: "Flores coloridas hechas totalmente a mano con limpiapipas.", imagen: "img/6.jpg", badge: "Temporada" },
+    { id: 7, nombre: "Angel de la Guarda", precio: 15.00, desc: "Angel de tamaño grande confeccionado en tela suave.", imagen: "img/7.jpg", badge: "" },
+    { id: 8, nombre: "Girasol en Macetero", precio: 6.00, desc: "Girasol decorativo en macetero con detalles en limpiapipas.", imagen: "img/8.jpg", badge: "" },
+    { id: 10, nombre: "Macetero con flores", precio: 2.50, desc: "Macetero de flores decorativo de limpiapipas.", imagen: "img/10.jpg", badge: "" },
+    { id: 11, nombre: "Muñecos navideños en fieltro", precio: 5.00, desc: "Hermoso muñecos decorativos de navidad .", imagen: "img/12.jpg", badge: "Popular" },
+    { id: 12, nombre: "figuritas en foamix", precio: 1.50, desc: "figuritas de foamix llamativas.", imagen: "img/14.jpg", badge: "" },
+    { id: 15, nombre: "Porta Dulces Navideño Papa Noel", precio: 1.50, desc: "Original y tierno adorno navideño en foami con espacio central para colocar dulces.", imagen: "img/24.jpg", badge: "Navidad" },
+    { id: 16, nombre: "Porta Dulces Navideño Pinguino", precio: 1.50, desc: "Original y tierno adorno navideño en foami con espacio central para colocar dulces.", imagen: "img/25.jpg", badge: "" },
+    { id: 17, nombre: "Porta Dulces De Ovejita", precio: 1.50, desc: "Original y tierno adorno navideño en foami con espacio central para colocar dulces.", imagen: "img/26.jpg", badge: "" }
+];
+
+let currentProductId = 0;
+
+function openProductModal(id) {
+    const product = PRODUCTS.find(p => p.id === id);
+    if (!product) return;
+    
+    currentProductId = id;
+    
+    // Se removió el '/' inicial para asegurar la carga correcta en rutas dinámicas de Thymeleaf
+    document.getElementById('pmImgWrap').innerHTML = `<img src="${product.imagen}" alt="${product.nombre}">`;
+    
+    const badgeEl = document.getElementById('pmBadge');
+    if(product.badge) {
+        badgeEl.textContent = product.badge;
+        badgeEl.style.display = 'inline-block';
+    } else {
+        badgeEl.style.display = 'none';
+    }
+    
+    document.getElementById('pmTitle').textContent = product.nombre;
+    document.getElementById('pmDesc').textContent = product.desc;
+    document.getElementById('pmPrice').textContent = '$' + product.precio.toFixed(2);
+    document.getElementById('modalQty').textContent = '1';
+    
+    document.getElementById('overlayProduct').classList.add('open');
+}
+
+function closeOverlay(id) {
+    document.getElementById(id).classList.remove('open');
+}
+
+function closeIfBg(event, overlayId) {
+    if (event.target.id === overlayId) {
+        closeOverlay(overlayId);
+    }
+}
+
+function changeModalQty(delta) {
+    let qty = parseInt(document.getElementById('modalQty').textContent);
+    qty = Math.max(1, qty + delta);
+    document.getElementById('modalQty').textContent = qty;
+}
+
+function addFromModal() {
+    const product = PRODUCTS.find(p => p.id === currentProductId);
+    const qty = parseInt(document.getElementById('modalQty').textContent);
+    
+    if (product) {
+        addToCart(product.nombre, product.precio, qty);
+        closeOverlay('overlayProduct');
+    }
+}
+</script>
+</body>
+</html>

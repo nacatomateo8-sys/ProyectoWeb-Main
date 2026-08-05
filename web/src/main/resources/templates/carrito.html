@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Carrito | Puntada Creativa</title>
+    <link rel="stylesheet" th:href="@{/css/disenoweb.css}">
+    <style>
+        .content { padding-top: 20px !important; padding-bottom: 20px !important; min-height: auto !important; }
+        .tabla-carrito { margin-top: 15px !important; margin-bottom: 15px !important; }
+        .carrito-acciones { margin-top: 15px !important; display: flex; justify-content: space-between; align-items: flex-start; }
+        .titulo-centrado { margin-bottom: 5px !important; }
+        .subtitulo-centrado { margin-bottom: 15px !important; }
+        .divider { margin-bottom: 20px !important; }
+        .grupo-botones { margin-top: 10px; display: flex; gap: 10px; justify-content: flex-end; align-items: center; }
+        .btn-pagar { background-color: #1C3D27; color: white; padding: 10px 20px; border: none; border-radius: 4px; font-weight: bold; display: inline-block; cursor: pointer; font-size: 1rem; transition: background 0.3s; }
+        .btn-pagar:hover { background-color: #142c1c; }
+        .btn-regresar { background-color: transparent; color: #1C3D27; padding: 10px 15px; border: 1.5px solid #1C3D27; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-block; font-size: 0.95rem; transition: all 0.3s; }
+        .btn-regresar:hover { background-color: #1C3D27; color: #ece6bf; }
+        .modal-login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(43, 37, 33, 0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-login-overlay.open { opacity: 1; pointer-events: auto; }
+        .cuadro-login { background-color: #f5f2f0; padding: 30px; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); position: relative; border: 1px solid #ece6bf; }
+        .modal-tabs { display: flex; justify-content: space-around; margin-bottom: 20px; border-bottom: 2px solid #ece6bf; }
+        .tab-btn { background: none; border: none; font-family: 'Playfair Display', serif; font-size: 1.2rem; padding: 10px; cursor: pointer; color: #615852; font-weight: bold; transition: all 0.3s; }
+        .tab-btn.active { color: #1C3D27; border-bottom: 3px solid #1C3D27; }
+        .btn-cerrar-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #8C533C; z-index: 10; }
+        .input-grupo { margin-bottom: 15px; text-align: left; }
+        .input-grupo label { display: block; margin-bottom: 5px; font-weight: 500; color: #2B2521; }
+        .input-grupo input { width: 100%; padding: 10px; border: 1px solid #615852; border-radius: 4px; background: white; font-family: inherit; }
+        .btn-login-submit { width: 100%; background-color: #8C533C; color: white; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 1rem; }
+        .btn-login-submit:hover { background-color: #70422f; }
+        .btn-register-submit { width: 100%; background-color: #1C3D27; color: white; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 1rem; }
+        .btn-register-submit:hover { background-color: #142c1c; }
+        .alerta-exito { display: none; background-color: #1C3D27; color: white; padding: 15px 25px; border-radius: 4px; position: fixed; top: 20px; right: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 3000; font-weight: bold; animation: slideIn 0.5s ease; }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        
+        <div id="alertaLogin" class="alerta-exito">
+            ✅ Autenticación correcta. Redirigiendo a la pasarela de pago...
+        </div>
+
+        <header>
+            <a th:href="@{/}"><img th:src="@{/img/logo.jpg}" alt="Logo" class="nav-logo"></a>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/catalogo}">Catálogo</a></li>
+                    <li><a th:href="@{/nosotros}">Nosotros</a></li>
+                    <li><a th:href="@{/ubicacion}">Ubicación</a></li>
+                    <li th:if="${session.usuarioLogueado != null}">
+                        <span style="color: #1C3D27; font-weight: bold;" th:text="'👋 ' + ${session.usuarioLogueado.nombre}"></span>
+                        <a th:href="@{/logout}" style="color: #8C533C; margin-left: 10px; font-weight: bold;">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="content">
+            <h2 class="titulo-centrado">Tu Carrito de Compras</h2>
+            <p class="subtitulo-centrado">Revisa el listado de tus manualidades seleccionadas antes de ordenar</p>
+            <div class="divider"></div>
+
+            <div id="cartContent">
+                <div id="mensajeCarritoVacio" style="display: none;">
+                    <table class="tabla-carrito">
+                        <thead>
+                            <tr><th>Producto</th><th>Precio Unitario</th><th>Cantidad</th><th>Subtotal</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="vacio"><td colspan="5" style="padding: 30px 10px;">Tu carrito está vacío actualmente.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="seccionCarritoLleno" style="display: none;">
+                    <table class="tabla-carrito">
+                        <thead>
+                            <tr><th>Producto</th><th>Precio Unitario</th><th>Cantidad</th><th>Subtotal</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody id="tablaCarritoCuerpo"></tbody>
+                    </table>
+                    
+                    <div class="carrito-acciones">
+                        <div><button class="btn-vacio" onclick="vaciarTodoElCarrito()" style="cursor: pointer; border: none; padding: 10px 20px;">Vaciar carrito</button></div>
+                        <div style="text-align:right;">
+                            <p class="total-destacado">Total: <span id="granTotalCarrito">$0.00</span></p>
+                            <div class="grupo-botones">
+                                <a th:href="@{/catalogo}" class="btn-regresar">← Seguir Comprando</a>
+                                <button onclick="enviarPedidoWhatsApp()" class="btn" style="cursor: pointer; border: none; padding: 10px 20px;">Pedir por WhatsApp 💬</button>
+                                <button onclick="verificarLoginYProceder()" class="btn-pagar">Proceder al Pago 💳</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="modal-login-overlay" id="loginModal">
+            <div class="cuadro-login">
+                <button class="btn-cerrar-modal" onclick="cerrarCuadroLogin()">✕</button>
+                <div class="modal-tabs">
+                    <button class="tab-btn active" id="tabLogin" onclick="cambiarPestana('login')">🔑 Ingresar</button>
+                    <button class="tab-btn" id="tabRegistro" onclick="cambiarPestana('registro')">📝 Registrarse</button>
+                </div>
+                
+                <form id="formularioLoginAsync">
+                    <div class="input-grupo"><label for="username">Usuario o Correo:</label><input type="text" id="username" name="username" required></div>
+                    <div class="input-grupo"><label for="password">Contraseña:</label><input type="password" id="password" name="password" required></div>
+                    <button type="submit" class="btn-login-submit">Ingresar y Pagar</button>
+                </form>
+
+                <form id="formularioRegistroAsync" style="display: none;">
+                    <div class="input-grupo"><label for="regNombre">Nombre Completo:</label><input type="text" id="regNombre" name="nombre" required></div>
+                    <div class="input-grupo"><label for="regUsername">Usuario:</label><input type="text" id="regUsername" name="username" required></div>
+                    <div class="input-grupo"><label for="regEmail">Correo Electrónico:</label><input type="email" id="regEmail" name="email" required></div>
+                    <div class="input-grupo"><label for="regPassword">Contraseña:</label><input type="password" id="regPassword" name="password" required></div>
+                    <button type="submit" class="btn-register-submit">Crear Cuenta y Pagar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script th:inline="javascript">
+// Variable global inyectada de Spring para saber el estado de la sesión en JS
+const usuarioLogueado = /*[[${session.usuarioLogueado != null}]]*/ false;
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderizarCarritoLocal();
+
+    // Enviar Login Asíncrono
+    const formLogin = document.getElementById("formularioLoginAsync");
+    if(formLogin) {
+        formLogin.addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(formLogin);
+            
+            fetch('/login/async', { method: 'POST', body: formData })
+            .then(res => res.text())
+            .then(data => {
+                if (data === "OK") {
+                    mostrarAlertaYFrenar();
+                } else {
+                    alert("Credenciales incorrectas. Verifique e intente de nuevo.");
+                }
+            });
+        });
+    }
+
+    // Enviar Registro Asíncrono
+    const formRegistro = document.getElementById("formularioRegistroAsync");
+    if(formRegistro) {
+        formRegistro.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(formRegistro);
+
+            fetch('/registro/async', { method: 'POST', body: formData })
+            .then(res => res.text())
+            .then(data => {
+                if (data === "OK") {
+                    mostrarAlertaYFrenar();
+                } else if (data === "EMAIL_REPETIDO") {
+                    alert("El correo electrónico ya se encuentra registrado.");
+                } else {
+                    alert("Error al procesar el registro.");
+                }
+            });
+        });
+    }
+});
+
+function verificarLoginYProceder() {
+    if (usuarioLogueado) {
+        window.location.href = "/carrito/confirmar";
+    } else {
+        cambiarPestana('login');
+        document.getElementById("loginModal").classList.add("open");
+    }
+}
+
+function mostrarAlertaYFrenar() {
+    cerrarCuadroLogin(); 
+    const alerta = document.getElementById("alertaLogin");
+    if(alerta) {
+        alerta.style.display = "block";
+        setTimeout(() => { 
+            alerta.style.display = "none"; 
+            window.location.href = "/carrito/confirmar"; // Va directo a seleccionar pago
+        }, 2000);
+    }
+}
+
+function cambiarPestana(tipo) {
+    const tabLogin = document.getElementById("tabLogin");
+    const tabRegistro = document.getElementById("tabRegistro");
+    const formLogin = document.getElementById("formularioLoginAsync");
+    const formRegistro = document.getElementById("formularioRegistroAsync");
+    if (tipo === 'login') {
+        tabLogin.classList.add("active"); tabRegistro.classList.remove("active");
+        formLogin.style.display = "block"; formRegistro.style.display = "none";
+    } else {
+        tabLogin.classList.remove("active"); tabTarget = tabRegistro.classList.add("active");
+        formLogin.style.display = "none"; formRegistro.style.display = "block";
+    }
+}
+
+function cerrarCuadroLogin() { document.getElementById("loginModal").classList.remove("open"); }
+function renderizarCarritoLocal() {
+    const savedCart = JSON.parse(localStorage.getItem('carrito')) || [];
+    const tablaCuerpo = document.getElementById("tablaCarritoCuerpo"); 
+    const totalElemento = document.getElementById("granTotalCarrito"); 
+    const contenedorVacio = document.getElementById("mensajeCarritoVacio"); 
+    const seccionLleno = document.getElementById("seccionCarritoLleno");
+
+    if (savedCart.length === 0) {
+        if (contenedorVacio) contenedorVacio.style.display = "block";
+        if (seccionLleno) seccionLleno.style.display = "none";
+        return;
+    }
+    if (contenedorVacio) contenedorVacio.style.display = "none";
+    if (seccionLleno) seccionLleno.style.display = "block";
+
+    let htmlContenido = ""; let totalGeneral = 0;
+    savedCart.forEach((item, index) => {
+        let subtotal = item.precio * item.cantidad; totalGeneral += subtotal;
+        htmlContenido += `<tr><td><strong>${item.nombre}</strong></td><td>$${item.precio.toFixed(2)}</td><td>${item.cantidad}</td><td>$${subtotal.toFixed(2)}</td><td><button onclick="eliminarDelCarritoCompleto(${index})" style="background:none; border:none; color:#c0392b; cursor:pointer; font-weight:bold;">✕ Eliminar</button></td></tr>`;
+    });
+    if (tablaCuerpo) tablaCuerpo.innerHTML = htmlContenido;
+    if (totalElemento) totalElemento.innerText = "$" + totalGeneral.toFixed(2);
+}
+function eliminarDelCarritoCompleto(index) {
+    let savedCart = JSON.parse(localStorage.getItem('carrito')) || [];
+    savedCart.splice(index, 1); localStorage.setItem('carrito', JSON.stringify(savedCart)); renderizarCarritoLocal(); 
+}
+function vaciarTodoElCarrito() { if(confirm("¿Deseas vaciar tu carrito?")) { localStorage.removeItem('carrito'); renderizarCarritoLocal(); } }
+</script>
+</body>
+</html>

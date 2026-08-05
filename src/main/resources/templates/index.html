@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntada Creativa | Manualidades Artesanales</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" th:href="@{/css/disenoweb.css}">
+</head>
+<body>
+
+<div class="contenedor">
+
+    <header class="site-header">
+        <div class="header-container">
+            <a th:href="@{/}" class="logo-link">
+                <img th:src="@{/img/logo.jpg}" alt="Logo Puntada Creativa" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="logo-text-fallback" style="display:none;">Puntada Creativa</span>
+            </a>
+            <nav class="main-nav">
+                <a th:href="@{/}" class="nav-item active">Inicio</a>
+                <a th:href="@{/catalogo}" class="nav-item">Catálogo</a>
+                <a th:href="@{/nosotros}" class="nav-item">Nosotros</a>
+                <a th:href="@{/ubicacion}" class="nav-item">Ubicación</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="carousel-container">
+        <button class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Diapositiva anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        
+        <div class="carousel-track" id="carouselTrack">
+            
+            <div class="carousel-slide">
+                <img th:src="@{/img/23.jpg}" alt="Colecciones de Temporada">
+                <div class="carousel-caption">
+                    <h3>Colecciones de Temporada</h3>
+                    <p>Detalles únicos en fieltro confeccionados totalmente a mano.</p>
+                </div>
+            </div>
+            
+            <div class="carousel-slide">
+                <img th:src="@{/img/9.jpg}" alt="Flores Eternas">
+                <div class="carousel-caption">
+                    <h3>Muñecas en fieltro</h3>
+                    <p>Coleccion de muñecas de fieltro grandes .</p>
+                </div>
+            </div>
+            
+            <div class="carousel-slide">
+                <img th:src="@{/img/14.jpg}" alt="Muñequería Personalizada">
+                <div class="carousel-caption">
+                    <span class="badge">100% Hecho a mano</span>
+                    <h3>figuritas en foamix</h3>
+                    <p>Creamos piezas a medida bajo tus especificaciones y gustos.</p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <button class="carousel-btn next" onclick="moveSlide(1)" aria-label="Siguiente diapositiva">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        
+        <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+
+    <main class="content">
+        <section class="hero-home">
+            <span class="section-subtitle">Bienvenidos a nuestro rincón artesanal</span>
+            <h2>Pasión por el diseño hecho a mano</h2>
+            <p class="hero-lead">En <strong>Puntada Creativa</strong> transformamos el fieltro y los limpiapipas en detalles mágicos para tu hogar y momentos especiales — hechos con paciencia, amor y creatividad.</p>
+            
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="card-icon"><i class="fa-solid fa-heart"></i></div>
+                    <h3>Manualidades Únicas</h3>
+                    <p>Diseños personalizados hechos 100% a mano con acabados limpios y profesionales.</p>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon"><i class="fa-solid fa-holly-berry"></i></div>
+                    <h3>Decoración Navideña</h3>
+                    <p>Especialistas en darle vida, color y calidez a tu hogar en la época más linda del año.</p>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon"><i class="fa-solid fa-gift"></i></div>
+                    <h3>Detalles a Medida</h3>
+                    <p>Creamos piezas personalizadas ideales para obsequios corporativos o familiares inolvidables.</p>
+                </div>
+            </div>
+            
+            <div class="cta-container">
+                <a th:href="@{/catalogo}" class="btn-primary">Explorar catálogo completo</a>
+            </div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/593989777823" target="_blank" class="whatsapp-float" title="Escríbenos por WhatsApp" rel="noopener noreferrer">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <p class="footer-logo-text">Puntada Creativa</p>
+                <p class="footer-tagline">Detalles hechos con amor y paciencia.</p>
+            </div>
+            <div class="footer-info">
+                <h4>Contacto</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Colibrí y Cashapamba, Sangolquí, Ecuador</p>
+                <p><i class="fa-solid fa-phone"></i> WhatsApp: <a href="https://wa.me/593989777823" target="_blank" rel="noopener noreferrer">+593 98 977 7823</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Puntada Creativa. Desarrollado con amor desde Quito.</p>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    let currentIndex = 0;
+    const track = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dotsContainer = document.getElementById('carouselDots');
+
+    // Generar los puntos (dots) dinámicamente según el número de imágenes
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        // Actualizar estado de los puntos
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function moveSlide(dir) {
+        currentIndex = (currentIndex + dir + slides.length) % slides.length;
+        updateCarousel();
+    }
+
+    function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+    
+    // Auto-play cada 6 segundos para dar tiempo a leer el contenido
+    setInterval(() => moveSlide(1), 6000);
+</script>
+</body>
+</html>

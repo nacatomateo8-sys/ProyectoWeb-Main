@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar Compra | Puntada Creativa</title>
+    <link rel="stylesheet" th:href="@{/css/disenoweb.css}">
+    <style>
+        .alerta-verde-exito { background-color: #1C3D27; color: white; padding: 15px; border-radius: 5px; text-align: center; font-weight: bold; margin-bottom: 25px; font-size: 1.1rem; }
+        .caja-metodo { background: #fdfbf7; border: 1px solid #ece6bf; padding: 25px; border-radius: 6px; margin-bottom: 25px; }
+        .recibo-ticket { display: none; background: #ffffff; border: 2px dashed #615852; padding: 20px; max-width: 380px; margin: 20px auto; font-family: 'Courier New', Courier, monospace; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .btn-accion { background-color: #8C533C; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="contenedor">
+
+    <header>
+        <a th:href="@{/}"><img th:src="@{/img/logo.jpg}" alt="Logo" class="nav-logo"></a>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/catalogo}">Catálogo</a></li>
+                <li><a th:href="@{/logout}" style="color: #8C533C; font-weight: bold;">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content" style="max-width: 600px; margin: 0 auto;">
+        
+        <div id="mensajeExitoVerde" class="alerta-verde-exito" style="display: none;">
+            ⚠️ ¡Compra exitosa! Su pago ha sido aceptado y su orden fue registrada.
+        </div>
+
+        <h2 class="titulo-centrado">Método de Pago y Recibo</h2>
+        <div class="divider"></div>
+
+        <div class="caja-metodo" id="bloquePago">
+            <h3>Seleccione el método de pago:</h3>
+            <div style="margin: 15px 0;">
+                <input type="radio" id="pichincha" name="metodo" value="Transferencia Banco Pichincha" checked>
+                <label for="pichincha"><strong>Transferencia Bancaria</strong> (Banco Pichincha)</label>
+            </div>
+            <div style="margin: 15px 0;">
+                <input type="radio" id="taller" name="metodo" value="Efectivo en Taller Sangolquí">
+                <label for="taller"><strong>Efectivo</strong> (Retiro en Taller - Sangolquí)</label>
+            </div>
+            <button class="btn-pagar" style="width: 100%; margin-top: 10px; background-color: #1C3D27; padding: 12px;" onclick="ejecutarTransaccion()">
+                Aceptar Método de Pago
+            </button>
+        </div>
+
+        <div id="seccionHistorial" style="display: none; margin-bottom: 25px;">
+            <h3>📋 Historial de Compras de esta cuenta</h3>
+            <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #ece6bf; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <div>
+                    <strong>Pedido #8492</strong><br>
+                    <small id="historialMetodo" style="color: #615852;"></small>
+                </div>
+                <button class="btn-accion" onclick="mostrarTicketFisico()">Ver Pedido 📄</button>
+            </div>
+        </div>
+
+        <div id="ticketCompra" class="recibo-ticket">
+            <div style="text-align: center; border-bottom: 1px dashed #615852; padding-bottom: 8px;">
+                <h4>PUNTADA CREATIVA</h4>
+                <p style="font-size: 0.85rem; margin: 2px 0;">Sangolquí, Ecuador</p>
+            </div>
+            <p style="font-size: 0.9rem; margin: 10px 0;">
+                <strong>Cliente:</strong> <span th:text="${session.usuarioLogueado != null ? session.usuarioLogueado.nombre : 'Usuario'}"></span><br>
+                <strong>Forma de Pago:</strong> <span id="ticketMetodo"></span>
+            </p>
+            <div style="border-bottom: 1px dashed #615852; margin: 10px 0;"></div>
+            <div id="detallesProductosTicket" style="font-size: 0.85rem;"></div>
+            <div style="border-bottom: 1px dashed #615852; margin: 10px 0;"></div>
+            <h4 style="text-align: right; margin: 5px 0;" id="ticketTotal">Total: $0.00</h4>
+            <p style="text-align: center; font-size: 0.75rem; color: #615852; margin-top: 15px;">
+                ¡Gracias por apoyar nuestro emprendimiento familiar!
+            </p>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function ejecutarTransaccion() {
+        const metodoSeleccionado = document.querySelector('input[name="metodo"]:checked').value;
+        document.getElementById("mensajeExitoVerde").style.display = "block";
+        document.getElementById("bloquePago").style.display = "none";
+        document.getElementById("historialMetodo").innerText = "Método: " + metodoSeleccionado;
+        document.getElementById("seccionHistorial").style.display = "block";
+        sessionStorage.setItem("metodoPagoElegido", metodoSeleccionado);
+    }
+
+    function mostrarTicketFisico() {
+        const cart = JSON.parse(localStorage.getItem('carrito')) || [];
+        const metodo = sessionStorage.getItem("metodoPagoElegido");
+        let container = document.getElementById("detallesProductosTicket");
+        let htmlContent = ""; let sumaTotal = 0;
+
+        cart.forEach(item => {
+            let sub = item.precio * item.cantidad; sumaTotal += sub;
+            htmlContent += `<p style="margin:4px 0;">${item.cantidad}x ${item.nombre} - $${sub.toFixed(2)}</p>`;
+        });
+
+        container.innerHTML = htmlContent;
+        document.getElementById("ticketMetodo").innerText = metodo;
+        document.getElementById("ticketTotal").innerText = "Total Pagado: $" + sumaTotal.toFixed(2);
+        document.getElementById("ticketCompra").style.display = "block";
+        
+        // Opcional: Limpiar el carrito local una vez generado el recibo
+        localStorage.removeItem('carrito');
+    }
+</script>
+</body>
+</html>

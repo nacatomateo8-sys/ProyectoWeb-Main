@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos | Puntada Creativa</title>
+    <link rel="stylesheet" th:href="@{/css/disenoweb.css}">
+</head>
+<body>
+    <div class="contenedor">
+
+<header>
+    <a th:href="@{/}"><img th:src="@{/img/logo.jpg}" alt="Logo Puntada Creativa" class="nav-logo"></a>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/catalogo}">Catálogo</a></li>
+            <li><a th:href="@{/nosotros}" class="active">Nosotros</a></li>
+            <li><a th:href="@{/ubicacion}">Ubicación</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="content">
+    <h2 class="titulo-centrado">Nuestra Historia</h2>
+    <p class="subtitulo-centrado">Un taller nacido de la pasión por crear</p>
+    <div class="divider"></div>
+
+    <div class="about-container">
+        <div class="about-card-img">
+            <img th:src="@{/img/11.jpg}" alt="Espacio de creación de Puntada Creativa">
+        </div>
+        <div class="about-card-text">
+            <h3>Nuestras Raíces</h3>
+            <p>Puntada Creativa nació como un pequeño proyecto familiar enfocado en dar valor al diseño hecho a mano. Creemos firmemente que los objetos que decoran nuestros espacios cotidianos e importantes deben poseer identidad, calidez y dedicación.</p>
+        </div>
+    </div>
+
+    <section style="margin-top: 52px;">
+        <h2 class="titulo-centrado" style="font-size: clamp(1.3rem,4vw,1.9rem);">Lo que nos define</h2>
+        <div class="valores-grid">
+            <div class="valor-card">
+                <h3>Hecho a Mano</h3>
+                <p>Ninguna pieza es producida en serie. Cada creación tiene su propio carácter e historia.</p>
+            </div>
+            <div class="valor-card">
+                <h3>Materiales Seleccionados</h3>
+                <p>Usamos fieltro de calidad, limpiapipas y elementos seleccionados con máximo cuidado.</p>
+            </div>
+            <div class="valor-card">
+                <h3>Identidad Local</h3>
+                <p>Nacimos en la región de Quito y llevamos el espíritu artesanal ecuatoriano en cada puntada.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<a href="https://wa.me/593989777823" target="_blank" class="whatsapp-float" title="Escríbenos por WhatsApp">💬</a>
+
+<footer>
+    <div class="footer-inner">
+        <p class="footer-logo-text">Puntada Creativa</p>
+        <p class="footer-info">
+            Dirección: Colibrí y Cashapamba, Sangolquí, Ecuador<br>
+            WhatsApp: <a href="https://wa.me/593989777823" target="_blank">+593 98 977 7823</a>
+        </p>
+        <p class="footer-author">© 2026 Puntada Creativa. Desarrollado con amor desde Quito.</p>
+    </div>
+</footer>
+
+</div> </body>
+</html>
